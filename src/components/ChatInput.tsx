@@ -20,17 +20,21 @@ interface AttachedFile {
 }
 
 const models = [
-  { value: "gpt-4-mini", label: "GPT-4 Mini" },
-  { value: "gpt-4", label: "GPT-4" },
-  { value: "gpt-4-mini-high", label: "GPT-4 Mini High" },
-  { value: "gpt-3", label: "GPT-3.5" },
-  { value: "gpt-3-mini", label: "GPT-3.5 Mini" },
-  { value: "gemini-flash", label: "Gemini Flash" },
-  { value: "gemini-pro", label: "Gemini Pro" },
-  { value: "claude-sonnet-4", label: "Claude Sonnet 4" },
-  { value: "claude-opus-4", label: "Claude Opus 4" },
-  { value: "grok-4", label: "Grok 4" },
-  { value: "deepseek", label: "DeepSeek" },
+  { value: "openai/o3-mini", label: "OpenAI O3 Mini" },
+  { value: "openai/gpt-4", label: "OpenAI GPT-4" },
+  { value: "openai/gpt-4-mini-high", label: "OpenAI GPT-4 Mini High" },
+  { value: "openai/gpt-3.5", label: "OpenAI GPT-3.5" },
+  { value: "openai/gpt-3.5-mini", label: "OpenAI GPT-3.5 Mini" },
+  { value: "google/gemini-flash", label: "Gemini Flash" },
+  { value: "google/gemini-pro", label: "Gemini Pro" },
+  { value: "anthropic/claude-sonnet-4", label: "Claude Sonnet 4" },
+  { value: "anthropic/claude-opus-4", label: "Claude Opus 4" },
+  { value: "x-ai/grok-4", label: "Grok 4" },
+  { value: "x-ai/grok-3", label: "Grok 3" },
+  { value: "x-ai/grok-3-beta", label: "Grok 3 Beta" },
+  { value: "x-ai/grok-3-mini", label: "Grok 3 Mini" },
+  { value: "x-ai/grok-3-mini-beta", label: "Grok 3 Mini Beta" },
+  { value: "deepseek/deepseek", label: "DeepSeek" },
 ];
 
 const ChatInput = ({ onSendMessage, disabled, model, onModelChange }: ChatInputProps) => {

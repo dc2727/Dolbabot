@@ -169,7 +169,7 @@ const ChatInterface = ({ user, onSignOut }: ChatInterfaceProps) => {
       // Prepare request to webhook
       const webhookPayload = {
         message: content,
-        model: chat.model,
+        model: chat.model, // This is already the exact value from the selector
         chat_id: chat.id,
         user_id: user.id,
         files: files ? files.map(f => ({ name: f.name, type: f.type, size: f.size })) : [],
@@ -251,8 +251,8 @@ const ChatInterface = ({ user, onSignOut }: ChatInterfaceProps) => {
 
   return (
     <div className="flex h-screen bg-background">
-      {/* v4 label */}
-      <div style={{ position: 'fixed', top: 8, left: 8, zIndex: 50, opacity: 0.7 }} className="text-xs font-bold bg-primary text-primary-foreground px-2 py-1 rounded shadow">v4</div>
+      {/* v1 label */}
+      <div style={{ position: 'fixed', top: 8, left: 8, zIndex: 50, opacity: 0.7 }} className="text-xs font-bold bg-primary text-primary-foreground px-2 py-1 rounded shadow">v1</div>
       {/* Sidebar */}
       <ChatSidebar
         currentChatId={currentChat?.id || null}
