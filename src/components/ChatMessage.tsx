@@ -2,7 +2,7 @@ import { memo } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneLight, oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import { oneLight } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { User, Bot } from "lucide-react";
@@ -17,8 +17,20 @@ interface ChatMessageProps {
 const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
   const isUser = role === "user";
 
+  let displayContent = content;
+  if (role === "assistant") {
+    try {
+      const parsed = JSON.parse(content);
+      if (parsed && typeof parsed === "object" && "output" in parsed) {
+        displayContent = parsed.output;
+      }
+    } catch (e) {
+      // Not a valid JSON, so we'll just display the content as is
+    }
+  }
+
   return (
-    <div className={cn("flex gap-3 py-4", isUser ? "justify-end" : "justify-start")}>
+    <div className={cn("flex gap-3 py-4", isUser ? "justify-end" : "justify-start")}> 
       {!isUser && (
         <Avatar className="h-8 w-8 mt-1">
           <AvatarFallback className="bg-primary text-primary-foreground">
@@ -27,7 +39,7 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
         </Avatar>
       )}
       
-      <div className={cn("flex flex-col gap-2", isUser ? "items-end" : "items-start")}>
+      <div className={cn("flex flex-col gap-2", isUser ? "items-end" : "items-start")}> 
         <Card className={cn(
           "max-w-[80%] px-4 py-3 shadow-sm",
           isUser 
@@ -36,7 +48,7 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
         )}>
           <div className="prose prose-sm max-w-none dark:prose-invert">
             {isUser ? (
-              <p className="m-0 whitespace-pre-wrap">{content}</p>
+              <p className="m-0 whitespace-pre-wrap">{displayContent}</p>
             ) : (
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -48,7 +60,7 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
                     return !inline ? (
                       <SyntaxHighlighter
                         style={oneLight}
-                        language={match[1]}
+                        language={match?.[1] ?? ""}
                         PreTag="div"
                         className="rounded-md"
                         {...rest}
@@ -84,7 +96,7 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
                   ),
                 }}
               >
-                {content}
+                {displayContent}
               </ReactMarkdown>
             )}
           </div>
