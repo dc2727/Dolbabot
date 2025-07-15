@@ -21,7 +21,7 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
   if (role === "assistant") {
     try {
       const parsed = JSON.parse(content);
-      if (parsed && typeof parsed === "object" && "output" in parsed) {
+      if (parsed && typeof parsed === "object" && typeof parsed.output === "string") {
         displayContent = parsed.output;
       }
     } catch (e) {

@@ -251,6 +251,8 @@ const ChatInterface = ({ user, onSignOut }: ChatInterfaceProps) => {
 
   return (
     <div className="flex h-screen bg-background">
+      {/* v2 label */}
+      <div style={{ position: 'fixed', top: 8, left: 8, zIndex: 50, opacity: 0.7 }} className="text-xs font-bold bg-primary text-primary-foreground px-2 py-1 rounded shadow">v2</div>
       {/* Sidebar */}
       <ChatSidebar
         currentChatId={currentChat?.id || null}
@@ -259,7 +261,6 @@ const ChatInterface = ({ user, onSignOut }: ChatInterfaceProps) => {
         onSignOut={onSignOut}
         userEmail={user?.email}
       />
-
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col">
         {/* Messages */}
@@ -290,7 +291,6 @@ const ChatInterface = ({ user, onSignOut }: ChatInterfaceProps) => {
             </div>
           )}
         </ScrollArea>
-
         {/* Input */}
         <ChatInput
           onSendMessage={sendMessage}
