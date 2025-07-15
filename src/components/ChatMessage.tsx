@@ -38,17 +38,20 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
           </AvatarFallback>
         </Avatar>
       )}
-      
       <div className={cn("flex flex-col gap-2", isUser ? "items-end" : "items-start")}> 
         <Card className={cn(
-          "max-w-[80%] px-4 py-3 shadow-sm",
+          "max-w-[80%] px-0 py-0 shadow-sm border-0 bg-transparent",
           isUser 
             ? "bg-chat-bubble-user text-chat-bubble-user-foreground" 
-            : "bg-chat-bubble-assistant text-chat-bubble-assistant-foreground border"
+            : "bg-transparent text-chat-bubble-assistant-foreground"
         )}>
-          <div className="prose prose-sm max-w-none dark:prose-invert">
+          <div className={
+            isUser
+              ? "m-0 whitespace-pre-wrap px-4 py-3 rounded-lg bg-primary text-primary-foreground"
+              : "overflow-x-auto bg-white dark:bg-zinc-900 px-6 py-5 rounded-lg shadow border border-border max-h-[500px]"
+          }>
             {isUser ? (
-              <p className="m-0 whitespace-pre-wrap">{displayContent}</p>
+              <p>{displayContent}</p>
             ) : (
               <ReactMarkdown
                 remarkPlugins={[remarkGfm]}
@@ -73,10 +76,10 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
                       </code>
                     );
                   },
-                  h1: ({ children }) => <h1 className="text-lg font-semibold mt-4 mb-2">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-base font-semibold mt-3 mb-2">{children}</h2>,
-                  h3: ({ children }) => <h3 className="text-sm font-semibold mt-2 mb-1">{children}</h3>,
-                  p: ({ children }) => <p className="mb-2 last:mb-0">{children}</p>,
+                  h1: ({ children }) => <h1 className="text-lg font-semibold mt-4 mb-2 text-red-400">{children}</h1>,
+                  h2: ({ children }) => <h2 className="text-base font-semibold mt-3 mb-2 text-red-400">{children}</h2>,
+                  h3: ({ children }) => <h3 className="text-sm font-semibold mt-2 mb-1 text-red-400">{children}</h3>,
+                  p: ({ children }) => <p className="mb-2 last:mb-0 text-black dark:text-white">{children}</p>,
                   ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
                   ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
                   li: ({ children }) => <li className="leading-relaxed">{children}</li>,
@@ -101,7 +104,6 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
             )}
           </div>
         </Card>
-        
         <span className="text-xs text-muted-foreground px-1">
           {new Date(timestamp).toLocaleTimeString([], { 
             hour: "2-digit", 
@@ -109,7 +111,6 @@ const ChatMessage = memo(({ role, content, timestamp }: ChatMessageProps) => {
           })}
         </span>
       </div>
-      
       {isUser && (
         <Avatar className="h-8 w-8 mt-1">
           <AvatarFallback className="bg-secondary text-secondary-foreground">
